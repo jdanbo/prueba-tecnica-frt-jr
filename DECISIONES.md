@@ -15,7 +15,7 @@ Estados: **supuesto** (valor por defecto de la Ronda 1, sin confirmar) · **medi
 | 9 | Error de búsqueda | "Su nombre no coincide con ningún producto" | Texto de ENTENDIMIENTO.md | Texto propio | confirmada |
 | 10 | Responsive | Grilla `repeat(auto-fill, minmax(min(100%, var(--card-min)), 1fr))` con `--card-min: 16rem`: da 4 · 3 · 2 · 1 columnas sin breakpoints. Encabezado **siempre en una fila**: el buscador absorbe el espacio, el select se encoge y en móvil solo queda el logo | Las tarjetas se cortaban: el buscador (336px) y el select (230px) fijos ensanchaban la página, y las columnas fijas no cedían | Columnas fijas por breakpoint; encabezado en dos filas | confirmada |
 | 11 | Tamaños de encabezado | 72px de alto y controles de 40px (antes 98 y 44) | Pedido de verlo más compacto; el select ahora tiene flecha propia y 208px | Valores medidos de la captura (98/44) | confirmada (ajuste pedido) |
-| 12 | Design system | `styleguide.html` + `styleguide.css` + `styleguide.js`: cargan el **mismo** `style.css` y leen los tokens con `getComputedStyle`, así la guía no se desfasa | Un solo origen de verdad | Documentar valores a mano | supuesto |
+| 12 | Design system | Carpeta `design-system/` (`index.html`, `styleguide.css`, `styleguide.js`), separada para respetar la estructura original de la raíz: carga el **mismo** `style.css` de la raíz y leen los tokens con `getComputedStyle`, así la guía no se desfasa | Un solo origen de verdad | Documentar valores a mano | supuesto |
 
 ## Revisión por secciones (referencia x 1.385 = 1440px)
 Factor: `HOME.PNG` mide 1040px de ancho y la tarjeta ampliada da 2.34x; ambos llevan a un frame de 1440px.
@@ -41,9 +41,4 @@ El contador "Agregados" no está en el diseño, así que empuja el buscador y el
 Estado único (`estado`: búsqueda, categoría y `carrito`) → funciones puras (`obtenerVisibles`, `contarUnidades`, `calcularTotal`) → `render()` y `renderCarrito()`. Los eventos solo cambian el estado y vuelven a pintar. El texto de los datos entra con `textContent`.
 Agregar o quitar del carrito repinta solo el carrito, sin reconstruir las tarjetas. El cierre del menú usa `composedPath()` porque el botón × se reemplaza al repintar.
 
-## Pendiente
-- Comparar con el archivo de Figma: las medidas salen de las capturas, no de Dev Mode.
-- Decidir el tamaño del precio (24px o ~22px) cuando haya acceso a Figma.
-- En móvil el select muestra "Todas l…" (recortado) para mantener el encabezado en una fila.
-- Probar foco por teclado y hover en el navegador real.
-- Revisión final (Checklist 4) y repaso de explicación (Checklist 5).
+

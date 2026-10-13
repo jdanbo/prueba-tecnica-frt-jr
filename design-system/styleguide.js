@@ -1,4 +1,4 @@
-// Rellena la guía leyendo los tokens reales de style.css, para que nunca se desfase.
+// Rellena la guía leyendo los tokens reales de ../style.css, para que nunca se desfase.
 const estilos = getComputedStyle(document.documentElement);
 
 document.querySelectorAll("[data-token]").forEach((el) => {
