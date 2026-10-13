@@ -1,6 +1,6 @@
 // =========================================================
 //  Catálogo de Productos - NovaTech
-//  Capas: Estado · Datos puros · Render · Eventos · Arranque
+//  Capas: Estado · Datos puros · Render · Carrito · Eventos · Arranque
 //  La pantalla siempre se pinta desde el objeto "estado".
 // =========================================================
 
@@ -10,16 +10,22 @@ const buscador = document.getElementById("buscador");
 const selectCategoria = document.getElementById("categoria");
 const contador = document.getElementById("contador");
 const alerta = document.getElementById("alerta");
-const carrito = document.getElementById("carrito");
+const aviso = document.getElementById("aviso");
+const carritoBtn = document.getElementById("carrito-btn");
+const carritoMenu = document.getElementById("carrito-menu");
+const carritoContador = document.getElementById("carrito-contador");
+const carritoLista = document.getElementById("carrito-lista");
+const carritoVacio = document.getElementById("carrito-vacio");
+const carritoTotal = document.getElementById("carrito-total");
 
 // ---------- Estado único ----------
-const estado = { busqueda: "", categoria: "todas", agregados: 0 };
+// carrito: Map id de producto -> cantidad (todo lo demás del carrito se deriva de aquí)
+const estado = { busqueda: "", categoria: "todas", carrito: new Map() };
 
-// ---------- Alerta temporal ----------
-const DURACION_ALERTA_MS = 3000;
-let temporizadorAlerta;
+const DURACION_AVISO_MS = 2500;
+let temporizadorAviso;
 
-// ---------- Iconos (SVG de trazo, uno por categoría de producto por id) ----------
+// ---------- Iconos (SVG de trazo, uno por producto según su id) ----------
 const ICONOS = {
   1: '<path d="M4 15v-3a8 8 0 0 1 16 0v3"/><rect x="3" y="14" width="4" height="7" rx="2"/><rect x="17" y="14" width="4" height="7" rx="2"/>',
   2: '<rect x="6" y="2" width="12" height="20" rx="2"/><circle cx="12" cy="14.5" r="3.5"/><circle cx="12" cy="7" r="1"/>',
@@ -33,7 +39,7 @@ const ICONOS = {
   10: '<rect x="3" y="4" width="18" height="12" rx="2"/><path d="M2 20h20"/>',
 };
 
-// ---------- Datos: función pura (misma entrada, misma salida) ----------
+// ---------- Datos: funciones puras (misma entrada, misma salida) ----------
 function obtenerVisibles() {
   const texto = estado.busqueda.trim().toLowerCase();
   return datos.productos.filter((p) =>
@@ -42,8 +48,28 @@ function obtenerVisibles() {
   );
 }
 
+function buscarProducto(id) {
+  return datos.productos.find((p) => p.id === id);
+}
+
+function contarUnidades() {
+  let unidades = 0;
+  estado.carrito.forEach((cantidad) => { unidades += cantidad; });
+  return unidades;
+}
+
+function calcularTotal() {
+  let total = 0;
+  estado.carrito.forEach((cantidad, id) => { total += buscarProducto(id).precio * cantidad; });
+  return total;
+}
+
 function formatearPrecio(valor) {
   return datos.moneda + valor.toLocaleString("en-US");
+}
+
+function plural(cantidad, singular, pluralTexto) {
+  return cantidad + " " + (cantidad === 1 ? singular : pluralTexto);
 }
 
 // ---------- Render ----------
@@ -55,18 +81,18 @@ function crear(etiqueta, clase, texto) {
   return el;
 }
 
-function crearIcono(id, tamano) {
+function crearSvg(contenido, tamano, grosor) {
   const svg = document.createElementNS("http://www.w3.org/2000/svg", "svg");
   svg.setAttribute("width", tamano);
   svg.setAttribute("height", tamano);
   svg.setAttribute("viewBox", "0 0 24 24");
   svg.setAttribute("fill", "none");
   svg.setAttribute("stroke", "currentColor");
-  svg.setAttribute("stroke-width", "1.5");
+  svg.setAttribute("stroke-width", grosor);
   svg.setAttribute("stroke-linecap", "round");
   svg.setAttribute("stroke-linejoin", "round");
   svg.setAttribute("aria-hidden", "true");
-  svg.innerHTML = ICONOS[id] || ""; // contenido propio del código, no de los datos
+  svg.innerHTML = contenido; // contenido propio del código, no de los datos
   return svg;
 }
 
@@ -75,17 +101,16 @@ function crearTarjeta(producto) {
 
   const media = crear("div", "card__media");
   media.style.setProperty("--producto-color", producto.color);
-  media.append(crearIcono(producto.id, 40));
+  media.append(crearSvg(ICONOS[producto.id] || "", 40, 1.5));
   if (producto.destacado) media.append(crear("span", "badge", "Destacado"));
 
   const cuerpo = crear("div", "card__body");
   const pie = crear("div", "card__footer");
 
-  const boton = crear("button", "btn");
+  const boton = crear("button", "btn", "+ Agregar");
   boton.type = "button";
-  boton.append("+ Agregar");
   boton.setAttribute("aria-label", "Agregar " + producto.nombre);
-  boton.addEventListener("click", agregar);
+  boton.addEventListener("click", () => agregar(producto.id));
 
   pie.append(crear("span", "card__price", formatearPrecio(producto.precio)), boton);
   cuerpo.append(
@@ -99,38 +124,68 @@ function crearTarjeta(producto) {
   return tarjeta;
 }
 
-function mostrarProductos(lista) {
-  catalogo.replaceChildren(...lista.map(crearTarjeta));
-  contador.textContent = lista.length + (lista.length === 1 ? " producto" : " productos");
-}
-
-function mostrarAlerta(texto, esError) {
-  alerta.hidden = !texto;
-  alerta.textContent = texto || "";
-  alerta.classList.toggle("alert--error", Boolean(esError));
-}
-
-// El error depende del estado y se mantiene; el aviso de categoría es un evento
-// puntual (ver avisarCategoria) y por eso render() solo lo limpia al cambiar la lista.
 function render() {
   const lista = obtenerVisibles();
-  mostrarProductos(lista);
-
-  clearTimeout(temporizadorAlerta);
-  if (lista.length === 0) {
-    mostrarAlerta("Su nombre no coincide con ningún producto", true);
-  } else {
-    mostrarAlerta("");
-  }
-  carrito.textContent = estado.agregados;
+  catalogo.replaceChildren(...lista.map(crearTarjeta));
+  contador.textContent = plural(lista.length, "producto", "productos");
+  alerta.hidden = lista.length > 0; // el error depende del estado, por eso es permanente
 }
 
-function avisarCategoria() {
-  if (estado.categoria === "todas") return;
-  const total = obtenerVisibles().length;
-  if (total === 0) return; // el error de render() ya explica el vacío
-  mostrarAlerta("Mostrando: " + estado.categoria + " · " + total + (total === 1 ? " producto" : " productos"));
-  temporizadorAlerta = setTimeout(() => mostrarAlerta(""), DURACION_ALERTA_MS);
+// Aviso flotante para eventos puntuales (categoría, agregado, eliminado)
+function avisar(texto) {
+  aviso.textContent = texto;
+  aviso.classList.add("toast--visible");
+  clearTimeout(temporizadorAviso);
+  temporizadorAviso = setTimeout(() => aviso.classList.remove("toast--visible"), DURACION_AVISO_MS);
+}
+
+// ---------- Carrito ----------
+function crearItemCarrito(id, cantidad) {
+  const producto = buscarProducto(id);
+  const item = crear("li", "cart-item");
+
+  const info = crear("div");
+  info.append(
+    crear("span", "cart-item__name", producto.nombre),
+    crear("span", "cart-item__detail", cantidad + " × " + formatearPrecio(producto.precio))
+  );
+
+  const quitar = crear("button", "cart-item__remove");
+  quitar.type = "button";
+  quitar.setAttribute("aria-label", "Quitar " + producto.nombre);
+  quitar.append(crearSvg('<path d="M18 6 6 18M6 6l12 12"/>', 16, 2));
+  quitar.addEventListener("click", () => quitarDelCarrito(id));
+
+  item.append(info, crear("span", "cart-item__price", formatearPrecio(producto.precio * cantidad)), quitar);
+  return item;
+}
+
+function renderCarrito() {
+  const unidades = contarUnidades();
+  carritoContador.textContent = unidades;
+  carritoContador.hidden = unidades === 0;
+  carritoBtn.setAttribute("aria-label", "Carrito, " + plural(unidades, "producto", "productos"));
+
+  carritoLista.replaceChildren(...[...estado.carrito].map(([id, cantidad]) => crearItemCarrito(id, cantidad)));
+  carritoVacio.hidden = unidades > 0;
+  carritoTotal.textContent = formatearPrecio(calcularTotal());
+}
+
+function agregar(id) {
+  estado.carrito.set(id, (estado.carrito.get(id) || 0) + 1);
+  renderCarrito();
+  avisar(buscarProducto(id).nombre + " agregado al carrito");
+}
+
+function quitarDelCarrito(id) {
+  estado.carrito.delete(id);
+  renderCarrito();
+  avisar(buscarProducto(id).nombre + " eliminado del carrito");
+}
+
+function alternarMenu(abrir) {
+  carritoMenu.hidden = !abrir;
+  carritoBtn.setAttribute("aria-expanded", String(abrir));
 }
 
 // ---------- Categorías ----------
@@ -141,11 +196,6 @@ function cargarCategorias() {
 }
 
 // ---------- Eventos: solo actualizan el estado y vuelven a pintar ----------
-function agregar() {
-  estado.agregados += 1;
-  carrito.textContent = estado.agregados; // sin render() completo para no reconstruir las tarjetas
-}
-
 buscador.addEventListener("input", () => {
   estado.busqueda = buscador.value;
   render();
@@ -154,9 +204,30 @@ buscador.addEventListener("input", () => {
 selectCategoria.addEventListener("change", () => {
   estado.categoria = selectCategoria.value;
   render();
-  avisarCategoria();
+  const total = obtenerVisibles().length;
+  if (total === 0) return; // el bloque de error ya explica el vacío
+  const nombre = estado.categoria === "todas" ? "todas las categorías" : estado.categoria;
+  avisar("Mostrando " + nombre + " · " + plural(total, "producto", "productos"));
+});
+
+carritoBtn.addEventListener("click", () => alternarMenu(carritoMenu.hidden));
+
+// Cierra el menú al hacer clic fuera o con Escape (y devuelve el foco al botón).
+// Se usa composedPath() porque al quitar un producto el botón pulsado se reemplaza
+// en el DOM y e.target.closest() ya no lo encontraría dentro del carrito.
+const carrito = carritoBtn.parentElement;
+document.addEventListener("click", (e) => {
+  if (!carritoMenu.hidden && !e.composedPath().includes(carrito)) alternarMenu(false);
+});
+
+document.addEventListener("keydown", (e) => {
+  if (e.key === "Escape" && !carritoMenu.hidden) {
+    alternarMenu(false);
+    carritoBtn.focus();
+  }
 });
 
 // ---------- Arranque ----------
 cargarCategorias();
 render();
+renderCarrito();

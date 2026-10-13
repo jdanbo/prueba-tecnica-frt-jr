@@ -1,0 +1,223 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>NovaTech | Design System</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet" />
+  <!-- Mismo style.css que el sitio: si un token cambia, esta guía cambia con él -->
+  <link rel="stylesheet" href="style.css" />
+  <link rel="stylesheet" href="styleguide.css" />
+</head>
+<body>
+  <header class="sg-top">
+    <div class="container">
+      <h1>NovaTech · Design System</h1>
+      <p>Tokens y componentes del catálogo, renderizados con el CSS real. Pasa el cursor y usa Tab para ver hover y foco.</p>
+      <nav class="sg-nav" aria-label="Secciones">
+        <a href="#colores">Colores</a>
+        <a href="#tipografia">Tipografía</a>
+        <a href="#espaciado">Espaciado</a>
+        <a href="#formas">Radios y sombras</a>
+        <a href="#componentes">Componentes</a>
+        <a href="index.html">Ver el catálogo →</a>
+      </nav>
+    </div>
+  </header>
+
+  <main class="container">
+
+    <!-- ============ TOKENS ============ -->
+    <section id="colores" class="sg-section">
+      <h2>Colores</h2>
+      <h3>Semánticos (los que usan los componentes)</h3>
+      <div class="sg-swatches">
+        <div class="sg-swatch" data-token="--color-action"></div>
+        <div class="sg-swatch" data-token="--color-action-hover"></div>
+        <div class="sg-swatch" data-token="--color-text"></div>
+        <div class="sg-swatch" data-token="--color-text-muted"></div>
+        <div class="sg-swatch" data-token="--color-bg"></div>
+        <div class="sg-swatch" data-token="--color-surface"></div>
+        <div class="sg-swatch" data-token="--color-field"></div>
+        <div class="sg-swatch" data-token="--color-border"></div>
+        <div class="sg-swatch" data-token="--color-danger"></div>
+        <div class="sg-swatch" data-token="--color-danger-bg"></div>
+        <div class="sg-swatch" data-token="--color-toast-bg"></div>
+      </div>
+      <h3>Primitivos (valores crudos)</h3>
+      <div class="sg-swatches">
+        <div class="sg-swatch" data-token="--blue-600"></div>
+        <div class="sg-swatch" data-token="--blue-700"></div>
+        <div class="sg-swatch" data-token="--gray-50"></div>
+        <div class="sg-swatch" data-token="--gray-100"></div>
+        <div class="sg-swatch" data-token="--gray-200"></div>
+        <div class="sg-swatch" data-token="--gray-500"></div>
+        <div class="sg-swatch" data-token="--gray-900"></div>
+        <div class="sg-swatch" data-token="--red-50"></div>
+        <div class="sg-swatch" data-token="--red-600"></div>
+        <div class="sg-swatch" data-token="--white"></div>
+      </div>
+      <h3>Colores de producto (vienen de <code>data.js</code>)</h3>
+      <div class="sg-swatches" id="sg-productos"></div>
+    </section>
+
+    <section id="tipografia" class="sg-section">
+      <h2>Tipografía</h2>
+      <p class="sg-note">Familia: Inter, con fallback a la fuente del sistema.</p>
+      <div class="sg-type">
+        <div><span class="sg-token" data-token="--fs-xl"></span><span style="font-size: var(--fs-xl); font-weight: var(--fw-bold)">Catálogo</span></div>
+        <div><span class="sg-token" data-token="--fs-lg"></span><span style="font-size: var(--fs-lg); font-weight: var(--fw-bold)">Q799</span></div>
+        <div><span class="sg-token" data-token="--fs-md"></span><span style="font-size: var(--fs-md); font-weight: var(--fw-semibold)">Audífonos Nova X1</span></div>
+        <div><span class="sg-token" data-token="--fs-sm"></span><span style="font-size: var(--fs-sm)">Inalámbricos con cancelación de ruido</span></div>
+        <div><span class="sg-token" data-token="--fs-xs"></span><span style="font-size: var(--fs-xs); font-weight: var(--fw-semibold)">Destacado · Audio</span></div>
+      </div>
+      <p class="sg-note">Pesos: <code>--fw-regular</code> 400 · <code>--fw-medium</code> 500 · <code>--fw-semibold</code> 600 · <code>--fw-bold</code> 700.</p>
+    </section>
+
+    <section id="espaciado" class="sg-section">
+      <h2>Espaciado</h2>
+      <div class="sg-space">
+        <div><span class="sg-token" data-token="--space-1"></span><i style="width: var(--space-1)"></i></div>
+        <div><span class="sg-token" data-token="--space-2"></span><i style="width: var(--space-2)"></i></div>
+        <div><span class="sg-token" data-token="--space-3"></span><i style="width: var(--space-3)"></i></div>
+        <div><span class="sg-token" data-token="--space-4"></span><i style="width: var(--space-4)"></i></div>
+        <div><span class="sg-token" data-token="--space-5"></span><i style="width: var(--space-5)"></i></div>
+        <div><span class="sg-token" data-token="--space-6"></span><i style="width: var(--space-6)"></i></div>
+      </div>
+      <p class="sg-note">Layout: contenedor <code>--container-max</code> · tarjeta mínima <code>--card-min</code> (define 4 · 3 · 2 · 1 columnas) · encabezado <code>--header-height</code> · controles <code>--control-height</code>.</p>
+    </section>
+
+    <section id="formas" class="sg-section">
+      <h2>Radios y sombras</h2>
+      <div class="sg-shapes">
+        <div class="sg-shape" style="border-radius: var(--radius-xs)"><span class="sg-token" data-token="--radius-xs"></span></div>
+        <div class="sg-shape" style="border-radius: var(--radius-sm)"><span class="sg-token" data-token="--radius-sm"></span></div>
+        <div class="sg-shape" style="border-radius: var(--radius-btn)"><span class="sg-token" data-token="--radius-btn"></span></div>
+        <div class="sg-shape" style="border-radius: var(--radius-md)"><span class="sg-token" data-token="--radius-md"></span></div>
+        <div class="sg-shape" style="box-shadow: var(--shadow-header)"><span class="sg-token" data-token="--shadow-header" data-name-only></span></div>
+        <div class="sg-shape" style="box-shadow: var(--shadow-card)"><span class="sg-token" data-token="--shadow-card" data-name-only></span></div>
+        <div class="sg-shape" style="box-shadow: var(--shadow-card-hover)"><span class="sg-token" data-token="--shadow-card-hover" data-name-only></span></div>
+        <div class="sg-shape" style="box-shadow: var(--shadow-popover)"><span class="sg-token" data-token="--shadow-popover" data-name-only></span></div>
+      </div>
+    </section>
+
+    <!-- ============ COMPONENTES ============ -->
+    <section id="componentes" class="sg-section">
+      <h2>Componentes</h2>
+
+      <h3>Marca</h3>
+      <div class="sg-demo">
+        <div class="brand">
+          <span class="brand__logo" aria-hidden="true"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M13 2 4 14h7l-1 8 9-12h-7l1-8z"/></svg></span>
+          <span class="brand__name">NovaTech</span>
+        </div>
+      </div>
+
+      <h3>Botón <code>.btn</code></h3>
+      <div class="sg-demo">
+        <button class="btn" type="button">+ Agregar</button>
+        <span class="sg-note">Estados: normal · hover (<code>--color-action-hover</code>) · foco visible (Tab)</span>
+      </div>
+
+      <h3>Chip <code>.chip</code> y etiqueta <code>.badge</code></h3>
+      <div class="sg-demo">
+        <span class="chip">Audio</span>
+        <span class="chip">Periféricos</span>
+        <span class="sg-on-color" style="--producto-color: var(--blue-600)"><span class="badge" style="position: static">Destacado</span></span>
+      </div>
+
+      <h3>Buscador <code>.search</code> y filtro <code>.select</code></h3>
+      <div class="sg-demo">
+        <div class="search">
+          <svg class="search__icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg>
+          <label for="sg-buscar" class="visually-hidden">Buscar producto</label>
+          <input id="sg-buscar" class="search__input" type="search" placeholder="Buscar producto..." />
+        </div>
+        <div class="select">
+          <label for="sg-select" class="visually-hidden">Categoría</label>
+          <select id="sg-select" class="select__field"><option>Todas las categorías</option><option>Audio</option></select>
+          <svg class="select__icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m6 9 6 6 6-6"/></svg>
+        </div>
+      </div>
+
+      <h3>Carrito <code>.cart</code> con minimenú</h3>
+      <div class="sg-demo sg-demo--tall">
+        <div class="cart">
+          <button class="cart__btn" type="button" aria-label="Carrito, 0 productos">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="9" cy="20" r="1"/><circle cx="18" cy="20" r="1"/><path d="M2 3h3l2.7 12.4a1 1 0 0 0 1 .6h9.2a1 1 0 0 0 1-.8L21 7H6"/></svg>
+          </button>
+        </div>
+        <div class="cart">
+          <button class="cart__btn" type="button" aria-label="Carrito, 3 productos">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="9" cy="20" r="1"/><circle cx="18" cy="20" r="1"/><path d="M2 3h3l2.7 12.4a1 1 0 0 0 1 .6h9.2a1 1 0 0 0 1-.8L21 7H6"/></svg>
+            <span class="cart__count">3</span>
+          </button>
+        </div>
+        <div class="sg-static-menu">
+          <div class="cart-menu">
+            <h4 class="cart-menu__title">Carrito</h4>
+            <ul class="cart-menu__list">
+              <li class="cart-item">
+                <div><span class="cart-item__name">Audífonos Nova X1</span><span class="cart-item__detail">2 × Q799</span></div>
+                <span class="cart-item__price">Q1,598</span>
+                <button class="cart-item__remove" type="button" aria-label="Quitar Audífonos Nova X1"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M18 6 6 18M6 6l12 12"/></svg></button>
+              </li>
+              <li class="cart-item">
+                <div><span class="cart-item__name">Mouse Glide Pro</span><span class="cart-item__detail">1 × Q299</span></div>
+                <span class="cart-item__price">Q299</span>
+                <button class="cart-item__remove" type="button" aria-label="Quitar Mouse Glide Pro"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M18 6 6 18M6 6l12 12"/></svg></button>
+              </li>
+            </ul>
+            <p class="cart-menu__total"><span>Total</span> <strong>Q1,897</strong></p>
+          </div>
+        </div>
+      </div>
+
+      <h3>Tarjeta de producto <code>.card</code></h3>
+      <ul class="grid sg-cards">
+        <li class="card">
+          <div class="card__media" style="--producto-color: #3b5bdb">
+            <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 15v-3a8 8 0 0 1 16 0v3"/><rect x="3" y="14" width="4" height="7" rx="2"/><rect x="17" y="14" width="4" height="7" rx="2"/></svg>
+            <span class="badge">Destacado</span>
+          </div>
+          <div class="card__body">
+            <h4 class="card__name">Audífonos Nova X1</h4>
+            <span class="chip">Audio</span>
+            <p class="card__desc">Inalámbricos con cancelación de ruido</p>
+            <div class="card__footer"><span class="card__price">Q799</span><button class="btn" type="button">+ Agregar</button></div>
+          </div>
+        </li>
+        <li class="card">
+          <div class="card__media" style="--producto-color: #e8590c">
+            <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="6" y="2" width="12" height="20" rx="2"/><circle cx="12" cy="14.5" r="3.5"/><circle cx="12" cy="7" r="1"/></svg>
+          </div>
+          <div class="card__body">
+            <h4 class="card__name">Parlante Pulse Mini</h4>
+            <span class="chip">Audio</span>
+            <p class="card__desc">Portátil y resistente al agua</p>
+            <div class="card__footer"><span class="card__price">Q349</span><button class="btn" type="button">+ Agregar</button></div>
+          </div>
+        </li>
+      </ul>
+      <p class="sg-note">Sin etiqueta (derecha) y con etiqueta "Destacado" (izquierda). El color del bloque viene de <code>data.js</code> mediante <code>--producto-color</code>.</p>
+
+      <h3>Alerta de error <code>.alert</code></h3>
+      <div class="alert" role="presentation">
+        <svg class="alert__icon" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="10"/><path d="M12 8v4M12 16h.01"/></svg>
+        <p class="alert__text">Su nombre no coincide con ningún producto</p>
+      </div>
+
+      <h3>Aviso flotante <code>.toast</code></h3>
+      <div class="sg-demo sg-toast-demo">
+        <div class="toast toast--visible" role="presentation">Mostrando Audio · 3 productos</div>
+        <div class="toast toast--visible" role="presentation">Audífonos Nova X1 agregado al carrito</div>
+      </div>
+    </section>
+  </main>
+
+  <script src="data.js"></script>
+  <script src="styleguide.js"></script>
+</body>
+</html>

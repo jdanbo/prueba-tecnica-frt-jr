@@ -55,7 +55,7 @@ https://www.figma.com/design/VCvcwfUKuZzxox2f2k3ES8/Prueba-Tecnica-JR
 ### SPA Proporcionada
 ![NovaTech1](assets\image.png)
 
-Proceso de Creación
+## Proceso de Creación
 
 1. Entendimiento
 2. ClaudeCode Enviroment
