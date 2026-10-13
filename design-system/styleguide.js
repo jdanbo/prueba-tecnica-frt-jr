@@ -40,3 +40,9 @@ datos.productos.forEach((p) => {
   muestra.append(color, etiqueta);
   productos.append(muestra);
 });
+
+// Tarjetas de ejemplo: el color del bloque sale de data.js, igual que en el catálogo
+document.querySelectorAll("[data-producto]").forEach((el) => {
+  const producto = datos.productos.find((p) => p.id === Number(el.dataset.producto));
+  el.style.setProperty("--producto-color", producto.color);
+});

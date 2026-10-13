@@ -4,6 +4,10 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>NovaTech | Design System</title>
+  <meta name="description" content="Guía visual de NovaTech: tokens y componentes del catálogo." />
+  <meta name="robots" content="noindex, nofollow" />
+  <meta name="theme-color" content="#3b5bdb" />
+  <link rel="icon" href="../assets/favicon.svg" type="image/svg+xml" />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet" />
@@ -73,7 +77,7 @@
         <div><span class="sg-token" data-token="--fs-sm"></span><span style="font-size: var(--fs-sm)">Inalámbricos con cancelación de ruido</span></div>
         <div><span class="sg-token" data-token="--fs-xs"></span><span style="font-size: var(--fs-xs); font-weight: var(--fw-semibold)">Destacado · Audio</span></div>
       </div>
-      <p class="sg-note">Pesos: <code>--fw-regular</code> 400 · <code>--fw-medium</code> 500 · <code>--fw-semibold</code> 600 · <code>--fw-bold</code> 700.</p>
+      <p class="sg-note">Pesos: <code>--fw-medium</code> 500 · <code>--fw-semibold</code> 600 · <code>--fw-bold</code> 700.</p>
     </section>
 
     <section id="espaciado" class="sg-section">
@@ -178,7 +182,7 @@
       <h3>Tarjeta de producto <code>.card</code></h3>
       <ul class="grid sg-cards">
         <li class="card">
-          <div class="card__media" style="--producto-color: #3b5bdb">
+          <div class="card__media" data-producto="1">
             <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 15v-3a8 8 0 0 1 16 0v3"/><rect x="3" y="14" width="4" height="7" rx="2"/><rect x="17" y="14" width="4" height="7" rx="2"/></svg>
             <span class="badge">Destacado</span>
           </div>
@@ -190,7 +194,7 @@
           </div>
         </li>
         <li class="card">
-          <div class="card__media" style="--producto-color: #e8590c">
+          <div class="card__media" data-producto="2">
             <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="6" y="2" width="12" height="20" rx="2"/><circle cx="12" cy="14.5" r="3.5"/><circle cx="12" cy="7" r="1"/></svg>
           </div>
           <div class="card__body">
@@ -201,7 +205,7 @@
           </div>
         </li>
       </ul>
-      <p class="sg-note">Sin etiqueta (derecha) y con etiqueta "Destacado" (izquierda). El color del bloque viene de <code>data.js</code> mediante <code>--producto-color</code>.</p>
+      <p class="sg-note">Sin etiqueta (derecha) y con etiqueta "Destacado" (izquierda). El color del bloque viene de <code>data.js</code> mediante <code>--producto-color</code> (se asigna con JavaScript, como en el catálogo).</p>
 
       <h3>Alerta de error <code>.alert</code></h3>
       <div class="alert" role="presentation">

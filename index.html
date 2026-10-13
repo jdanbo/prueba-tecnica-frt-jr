@@ -4,6 +4,10 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>NovaTech | Catálogo</title>
+  <meta name="description" content="Catálogo de NovaTech: audio, periféricos, pantallas y accesorios de tecnología. Busca por nombre y filtra por categoría." />
+  <meta name="author" content="NovaTech" />
+
+  <link rel="icon" href="assets/favicon.svg" type="image/svg+xml" />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet" />
@@ -20,19 +24,21 @@
       </div>
 
       <div class="header__tools">
-        <div class="search">
-          <svg class="search__icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg>
-          <label for="buscador" class="visually-hidden">Buscar producto</label>
-          <input id="buscador" class="search__input" type="search" placeholder="Buscar producto..." autocomplete="off" />
-        </div>
+        <form class="filters" role="search" aria-label="Buscar y filtrar productos">
+          <div class="search">
+            <svg class="search__icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg>
+            <label for="buscador" class="visually-hidden">Buscar producto</label>
+            <input id="buscador" class="search__input" type="search" placeholder="Buscar producto..." autocomplete="off" />
+          </div>
 
-        <div class="select">
-          <label for="categoria" class="visually-hidden">Categoría</label>
-          <select id="categoria" class="select__field">
-            <option value="todas">Todas las categorías</option>
-          </select>
-          <svg class="select__icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m6 9 6 6 6-6"/></svg>
-        </div>
+          <div class="select">
+            <label for="categoria" class="visually-hidden">Categoría</label>
+            <select id="categoria" class="select__field">
+              <option value="todas">Todas las categorías</option>
+            </select>
+            <svg class="select__icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m6 9 6 6 6-6"/></svg>
+          </div>
+        </form>
 
         <div class="cart">
           <button id="carrito-btn" class="cart__btn" type="button" aria-expanded="false" aria-controls="carrito-menu" aria-label="Carrito, 0 productos">
@@ -52,9 +58,9 @@
   </header>
 
   <main class="container">
-    <div class="catalogo__head">
-      <h2 class="catalogo__title">Catálogo</h2>
-      <p id="contador" class="catalogo__count" role="status"></p>
+    <div class="catalog__head">
+      <h2 class="catalog__title">Catálogo</h2>
+      <p id="contador" class="catalog__count" role="status"></p>
     </div>
 
     <div id="alerta" class="alert" role="alert" hidden>

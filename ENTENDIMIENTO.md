@@ -82,7 +82,7 @@ Regla: tokens primero, de lo pequeño a lo grande, y cada paso se compara con la
         index.html
         styleguide.css
         styleguide.js
-    assets/               capturas de referencia
+    assets/               capturas de referencia y favicon.svg
     DECISIONES.md         registro detallado de cada decisión
 
 ## Decisiones propias
@@ -100,7 +100,8 @@ Objetivo: el código más parecido posible al diseño original, con las mejoras 
 | **Aviso flotante** para categoría, agregado y eliminado | **Propio** | Confirma cada acción sin mover el contenido |
 | **Bloque de error** con icono rojo | **Propio** | El diseño no lo muestra; el texto sí viene de los requisitos |
 | **Flecha propia del select** | **Propio** | Mismo aspecto en todos los navegadores |
-| **Responsive** (4 · 3 · 2 · 1 columnas) | **Propio** | El diseño solo trae desktop |
+| **Responsive** (4 · 3 · 2 · 1 columnas) | **Propio** | El diseño solo trae desktop. En móvil el minimenú del carrito ocupa el ancho del contenedor, con los mismos márgenes de la página |
+| **Favicon y metaetiquetas** (`description`, `theme-color`, Open Graph, Twitter) | **Propio** | El favicon es el logo de NovaTech en `assets/favicon.svg`; el diseño no lo define |
 | **Design system en código** (`design-system/`) | **Propio** | Documenta tokens y componentes con el CSS real |
 
 ### Sombras

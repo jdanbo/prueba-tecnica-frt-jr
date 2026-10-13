@@ -9,6 +9,7 @@ const catalogo = document.getElementById("catalogo");
 const buscador = document.getElementById("buscador");
 const selectCategoria = document.getElementById("categoria");
 const contador = document.getElementById("contador");
+const filtros = document.querySelector(".filters");
 const alerta = document.getElementById("alerta");
 const aviso = document.getElementById("aviso");
 const carritoBtn = document.getElementById("carrito-btn");
@@ -180,6 +181,8 @@ function agregar(id) {
 function quitarDelCarrito(id) {
   estado.carrito.delete(id);
   renderCarrito();
+  // El botón pulsado desaparece del DOM: el foco pasa al siguiente × o, si no queda ninguno, al carrito
+  (carritoLista.querySelector(".cart-item__remove") || carritoBtn).focus();
   avisar(buscarProducto(id).nombre + " eliminado del carrito");
 }
 
@@ -196,6 +199,9 @@ function cargarCategorias() {
 }
 
 // ---------- Eventos: solo actualizan el estado y vuelven a pintar ----------
+// Con un solo campo de texto, Enter enviaría el formulario y recargaría la página
+filtros.addEventListener("submit", (e) => e.preventDefault());
+
 buscador.addEventListener("input", () => {
   estado.busqueda = buscador.value;
   render();

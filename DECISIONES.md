@@ -15,7 +15,6 @@ Estados: **supuesto** (valor por defecto de la Ronda 1, sin confirmar) · **medi
 | 9 | Error de búsqueda | "Su nombre no coincide con ningún producto" | Texto de ENTENDIMIENTO.md | Texto propio | confirmada |
 | 10 | Responsive | Grilla `repeat(auto-fill, minmax(min(100%, var(--card-min)), 1fr))` con `--card-min: 16rem`: da 4 · 3 · 2 · 1 columnas sin breakpoints. Encabezado **siempre en una fila**: el buscador absorbe el espacio, el select se encoge y en móvil solo queda el logo | Las tarjetas se cortaban: el buscador (336px) y el select (230px) fijos ensanchaban la página, y las columnas fijas no cedían | Columnas fijas por breakpoint; encabezado en dos filas | confirmada |
 | 11 | Tamaños de encabezado | 72px de alto y controles de 40px (antes 98 y 44) | Pedido de verlo más compacto; el select ahora tiene flecha propia y 208px | Valores medidos de la captura (98/44) | confirmada (ajuste pedido) |
-| 12 | Design system | Carpeta `design-system/` (`index.html`, `styleguide.css`, `styleguide.js`), separada para respetar la estructura original de la raíz: carga el **mismo** `style.css` de la raíz y leen los tokens con `getComputedStyle`, así la guía no se desfasa | Un solo origen de verdad | Documentar valores a mano | supuesto |
 
 ## Revisión por secciones (referencia x 1.385 = 1440px)
 Factor: `HOME.PNG` mide 1040px de ancho y la tarjeta ampliada da 2.34x; ambos llevan a un frame de 1440px.
@@ -42,3 +41,24 @@ Estado único (`estado`: búsqueda, categoría y `carrito`) → funciones puras 
 Agregar o quitar del carrito repinta solo el carrito, sin reconstruir las tarjetas. El cierre del menú usa `composedPath()` porque el botón × se reemplaza al repintar.
 
 
+
+## Revisión final
+
+| Punto | Resultado |
+|---|---|
+| Ningún color, tamaño o espaciado fuera de los tokens | Corregido. Había ~25 valores sueltos en rem y 3 interlineados; ahora son tokens. Quedan solo los bordes de 1px, la técnica `visually-hidden` y los puntos de corte de las media queries (no admiten `var()`) |
+| HTML semántico | Ok. `header`, `main`, `ul/li`, `label` en cada control, `h1` > `h2` > `h3`. Se agregó `<form role="search">` alrededor del buscador y el filtro, con `preventDefault` en `submit` para que Enter no recargue la página |
+| Imágenes con `width`, `height`, `alt` | No aplica: no hay `<img>`; los SVG son decorativos con `aria-hidden` |
+| `:focus-visible` en todo lo interactivo | Ok (regla global). Se agregó el foco al quitar un producto: pasa al siguiente × o al botón del carrito |
+| Objetivos táctiles ≥ 24px | Ok: el menor es el × del carrito (28px); botones y campos miden 40px |
+| Contraste de texto (4.5:1) | Corregido. El gris tenue `#6b7280` daba 4.47 y 4.23 sobre fondos grises; ahora `#666c7a` da 4.61 como mínimo. Resto de pares: 4.83 a 15.5 |
+| Contraste de controles (3:1) | **No cumple, decisión consciente.** El borde del select da 1.25:1 y el fondo del buscador 1.06:1. Es el estilo del diseño; oscurecerlos lo aleja de la captura. Mitigan el icono, el placeholder y el contorno de foco (5.67:1) |
+| Iconos blancos sobre el color del producto | El del Hub USB-C (naranja) da 2.48:1. Es decorativo y el nombre del producto está en texto, por eso se deja |
+| Sin `console.log`, sin código muerto | Ok. Se quitó el token `--fw-regular` (sin uso) y una regla móvil duplicada. Sin `console.*`, `TODO` ni clases sin usar |
+| Probado a 390, 768 y 1280px | Ok: 1, 2 y 4 columnas, sin scroll horizontal, encabezado en una fila, sin tarjetas cortadas |
+| Filtros, búsqueda y estado vacío | Ok: 4 categorías, búsqueda sin distinguir mayúsculas, espacios solos, combinación de ambos, error sin resultados |
+| Nombres claros y consistentes (BEM) | Ok. `.catalogo__*` pasó a `.catalog__*` para dejar todas las clases en inglés |
+| Seguridad | Ok. Los textos de los datos entran con `textContent`; el único `innerHTML` inserta los trazos fijos de los iconos |
+| README breve | **Pendiente.** `README.md` es el enunciado de la prueba y no se tocó; el resumen del proyecto está en `ENTENDIMIENTO.md` |
+
+Probado en el navegador integrado del panel, no en un navegador real ni en un teléfono. El foco por teclado se verificó por código y con eventos simulados.
