@@ -4,25 +4,51 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>NovaTech | Catálogo</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet" />
   <link rel="stylesheet" href="style.css" />
 </head>
 <body>
-  <!-- Seguí el diseño de Figma para la estructura y el estilo. -->
-  <!-- Podés cambiar y acomodar este HTML como lo necesites. -->
-  <header>
-    <h1>NovaTech</h1>
+  <header class="header">
+    <div class="container header__inner">
+      <div class="brand">
+        <span class="brand__logo" aria-hidden="true">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M13 2 4 14h7l-1 8 9-12h-7l1-8z"/></svg>
+        </span>
+        <h1 class="brand__name">NovaTech</h1>
+      </div>
 
-    <!-- Buscador -->
-    <input id="buscador" type="text" placeholder="Buscar producto..." />
+      <div class="header__tools">
+        <div class="search">
+          <svg class="search__icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg>
+          <label for="buscador" class="visually-hidden">Buscar producto</label>
+          <input id="buscador" class="search__input" type="search" placeholder="Buscar producto..." autocomplete="off" />
+        </div>
 
-    <!-- Filtro por categoría (las demás opciones se agregan desde JavaScript) -->
-    <select id="categoria">
-      <option value="todas">Todas las categorías</option>
-    </select>
+        <label for="categoria" class="visually-hidden">Categoría</label>
+        <select id="categoria" class="select">
+          <option value="todas">Todas las categorías</option>
+        </select>
+
+        <div class="cart" aria-label="Productos agregados">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="9" cy="20" r="1"/><circle cx="18" cy="20" r="1"/><path d="M2 3h3l2.7 12.4a1 1 0 0 0 1 .6h9.2a1 1 0 0 0 1-.8L21 7H6"/></svg>
+          <span>Agregados</span>
+          <span id="carrito" class="cart__count" aria-live="polite">0</span>
+        </div>
+      </div>
+    </div>
   </header>
 
-  <!-- Aquí se van a mostrar las tarjetas de productos -->
-  <main id="catalogo"></main>
+  <main class="container">
+    <div class="catalogo__head">
+      <h2 class="catalogo__title">Catálogo</h2>
+      <p id="contador" class="catalogo__count" role="status"></p>
+    </div>
+
+    <p id="alerta" class="alert" role="status" hidden></p>
+    <ul id="catalogo" class="grid"></ul>
+  </main>
 
   <script src="data.js"></script>
   <script src="script.js"></script>

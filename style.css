@@ -1,17 +1,401 @@
-/* ===== Base ===== */
+/* =========================================================
+   NovaTech · Catálogo
+   Capas: 1 Tokens · 2 Base · 3 Layout · 4 Componentes · 5 Responsive
+   Los componentes solo usan tokens semánticos (capa 1b).
+   ========================================================= */
+
+/* ===== 1. Tokens ===== */
+:root {
+  /* 1a. Primitivos: valores crudos (medidos de las capturas; los marcados ~ son estimados) */
+  --blue-600: #3b5bdb;
+  --blue-700: #364fc7;
+  --gray-50: #f5f6f8;
+  --gray-100: #eef0f3;
+  --gray-200: #e3e6ea;
+  --gray-500: #6b7280;
+  --gray-900: #1f2430;
+  --white: #ffffff;
+
+  --font-inter: "Inter", system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+
+  /* 1b. Semánticos: lo que usan los componentes */
+  --color-action: var(--blue-600);
+  --color-action-hover: var(--blue-700);
+  --color-on-action: var(--white);
+  --color-text: var(--gray-900);
+  --color-text-muted: var(--gray-500);
+  --color-bg: var(--gray-50);
+  --color-surface: var(--white);
+  --color-field: var(--gray-100);
+  --color-border: var(--gray-200);
+  --color-chip-bg: var(--gray-100);
+
+  --font-base: var(--font-inter);
+  --fs-xs: 0.6875rem;   /* chip y etiqueta: 11px medidos en la captura */
+  --fs-sm: 0.875rem;    /* descripción, botón, controles */
+  --fs-md: 1rem;        /* nombre de producto */
+  --fs-lg: 1.5rem;      /* precio */
+  --fs-xl: 2rem;        /* título "Catálogo" */
+  --fw-regular: 400;
+  --fw-medium: 500;
+  --fw-semibold: 600;
+  --fw-bold: 700;
+
+  --space-1: 0.25rem;
+  --space-2: 0.5rem;
+  --space-3: 0.75rem;
+  --space-4: 1rem;
+  --space-5: 1.5rem;
+  --space-6: 2rem;
+
+  --radius-sm: 0.5rem;
+  --radius-btn: 0.625rem;
+  --radius-md: 0.875rem;
+  --shadow-header: 0 1px 3px rgb(0 0 0 / 8%);
+  --shadow-card: 0 1px 3px rgb(0 0 0 / 6%), 0 0 0 1px var(--color-border);
+  --shadow-card-hover: 0 6px 18px rgb(0 0 0 / 12%), 0 0 0 1px var(--color-border);
+
+  --container-max: 1200px;
+  --header-height: 6.125rem;   /* ~98px: 71px de la captura x 1.385 */
+  --control-height: 2.75rem;   /* ~44px */
+  --media-height: 6rem;
+  --transition: 150ms ease;
+}
+
+/* ===== 2. Base ===== */
 * {
   box-sizing: border-box;
 }
 
 body {
   margin: 0;
-  font-family: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
-  color: #1f2430;
-  background: #f5f6f8;
+  font-family: var(--font-base);
+  font-size: var(--fs-sm);
+  color: var(--color-text);
+  background: var(--color-bg);
 }
 
-/* =========================================================
-   Escribí tus estilos aquí, siguiendo el diseño de Figma:
-   el encabezado, el buscador, el filtro, la grilla y las
-   tarjetas de producto.
-   ========================================================= */
+button,
+input,
+select {
+  font: inherit;
+  color: inherit;
+}
+
+:focus-visible {
+  outline: 2px solid var(--color-action);
+  outline-offset: 2px;
+}
+
+.visually-hidden {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip-path: inset(50%);
+  white-space: nowrap;
+}
+
+/* ===== 3. Layout ===== */
+.container {
+  width: min(100% - 2 * var(--space-5), var(--container-max));
+  margin-inline: auto;
+}
+
+.header {
+  background: var(--color-surface);
+  box-shadow: var(--shadow-header);
+}
+
+.header__inner {
+  display: flex;
+  align-items: center;
+  gap: var(--space-4);
+  min-height: var(--header-height);
+}
+
+.header__tools {
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+  margin-left: auto;
+}
+
+.catalogo__head {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  padding-block: 2.5rem 1.25rem;
+}
+
+.grid {
+  list-style: none;
+  margin: 0;
+  padding: 0 0 var(--space-6);
+  display: grid;
+  gap: var(--space-5);
+  grid-template-columns: repeat(4, 1fr);
+}
+
+/* ===== 4. Componentes ===== */
+
+/* Marca */
+.brand {
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+  font-size: 1.375rem;
+  font-weight: var(--fw-bold);
+}
+
+.brand__logo {
+  display: grid;
+  place-items: center;
+  width: 2.25rem;
+  height: 2.25rem;
+  border-radius: var(--radius-btn);
+  background: var(--color-action);
+  color: var(--color-on-action);
+}
+
+.brand__name {
+  margin: 0;
+  font-size: inherit;
+}
+
+/* Buscador y select */
+.search {
+  position: relative;
+  display: flex;
+  align-items: center;
+}
+
+.search__icon {
+  position: absolute;
+  left: var(--space-3);
+  color: var(--color-text-muted);
+  pointer-events: none;
+}
+
+.search__input {
+  width: 21rem;
+  height: var(--control-height);
+  padding: 0 var(--space-3) 0 2.5rem;
+  border: 1px solid transparent;
+  border-radius: var(--radius-sm);
+  background: var(--color-field);
+}
+
+.search__input::placeholder {
+  color: var(--color-text-muted);
+}
+
+.select {
+  min-width: 14.375rem;   /* ~230px */
+  height: var(--control-height);
+  padding: 0 var(--space-3);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-sm);
+  background: var(--color-surface);
+  font-weight: var(--fw-medium);
+  cursor: pointer;
+}
+
+/* Carrito */
+.cart {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+  height: var(--control-height);
+  padding: 0 var(--space-3);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-sm);
+  background: var(--color-surface);
+  font-weight: var(--fw-semibold);
+}
+
+.cart__count {
+  min-width: 1.375rem;
+  padding: 0 var(--space-2);
+  border-radius: 999px;
+  background: var(--color-action);
+  color: var(--color-on-action);
+  font-size: var(--fs-xs);
+  line-height: 1.375rem;
+  text-align: center;
+}
+
+/* Títulos de sección */
+.catalogo__title {
+  margin: 0;
+  font-size: var(--fs-xl);
+  font-weight: var(--fw-bold);
+  line-height: 1.2;
+}
+
+.catalogo__count {
+  margin: 0;
+  color: var(--color-text-muted);
+}
+
+/* Alertas: aviso de categoría y error de búsqueda */
+.alert {
+  margin: 0 0 var(--space-4);
+  padding: var(--space-3) var(--space-4);
+  border-radius: var(--radius-sm);
+  background: var(--color-field);
+  font-weight: var(--fw-medium);
+}
+
+.alert--error {
+  border: 1px solid var(--color-border);
+  background: var(--color-surface);
+  color: var(--color-text-muted);
+  text-align: center;
+  padding-block: var(--space-6);
+}
+
+/* Tarjeta de producto */
+.card {
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  border-radius: var(--radius-md);
+  background: var(--color-surface);
+  box-shadow: var(--shadow-card);
+  transition: box-shadow var(--transition), transform var(--transition);
+}
+
+.card:hover {
+  box-shadow: var(--shadow-card-hover);
+  transform: translateY(-2px);
+}
+
+.card__media {
+  position: relative;
+  display: grid;
+  place-items: center;
+  height: var(--media-height);
+  background: var(--producto-color); /* viene de data.js, una por producto */
+  color: var(--color-on-action);
+}
+
+.card__body {
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: var(--space-2);
+  padding: var(--space-4);
+}
+
+.card__name {
+  margin: 0;
+  font-size: var(--fs-md);
+  font-weight: var(--fw-semibold);
+}
+
+.card__desc {
+  flex: 1;
+  margin: 0;
+  color: var(--color-text-muted);
+  line-height: 1.5;
+}
+
+.card__footer {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  align-self: stretch;
+  margin-top: var(--space-2);
+}
+
+.card__price {
+  font-size: var(--fs-lg);
+  font-weight: var(--fw-bold);
+}
+
+.badge {
+  position: absolute;
+  top: var(--space-3);
+  right: var(--space-3);
+  padding: var(--space-1) 0.375rem;
+  border-radius: 0.375rem;
+  line-height: 1.25;
+  background: var(--color-surface);
+  color: var(--color-action);
+  font-size: var(--fs-xs);
+  font-weight: var(--fw-semibold);
+}
+
+.chip {
+  padding: 0.1875rem var(--space-2);
+  line-height: 1.25;
+  border-radius: var(--space-1);
+  background: var(--color-chip-bg);
+  color: var(--color-text-muted);
+  font-size: var(--fs-xs);
+  font-weight: var(--fw-medium);
+}
+
+.btn {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-2);
+  min-height: 2.5rem;
+  padding: 0 var(--space-4);
+  border: 0;
+  border-radius: var(--radius-btn);
+  background: var(--color-action);
+  color: var(--color-on-action);
+  font-size: var(--fs-sm);
+  font-weight: var(--fw-semibold);
+  cursor: pointer;
+  transition: background var(--transition);
+}
+
+.btn:hover {
+  background: var(--color-action-hover);
+}
+
+/* ===== 5. Responsive (desktop-first, valores del supuesto de la Ronda 1) ===== */
+@media (max-width: 1199px) {
+  .grid { grid-template-columns: repeat(3, 1fr); }
+}
+
+@media (max-width: 899px) {
+  .grid { grid-template-columns: repeat(2, 1fr); }
+}
+
+@media (max-width: 599px) {
+  .grid { grid-template-columns: 1fr; }
+
+  .header__inner {
+    flex-wrap: wrap;
+    min-height: 0;
+    padding-block: var(--space-4);
+  }
+
+  .header__tools {
+    flex-wrap: wrap;
+    width: 100%;
+    margin-left: 0;
+  }
+
+  .search,
+  .search__input {
+    width: 100%;
+  }
+
+  .search {
+    flex: 1 1 100%;
+  }
+
+  .select {
+    flex: 1;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  * { transition: none !important; }
+}

@@ -53,4 +53,17 @@ Recrear el catalogo de productos de NovaTech
 https://www.figma.com/design/VCvcwfUKuZzxox2f2k3ES8/Prueba-Tecnica-JR
 
 ### SPA Proporcionada
-![NovaTech1](image.png)
+![NovaTech1](assets\image.png)
+
+Proceso de Creación
+
+1. Entendimiento
+2. ClaudeCode Enviroment
+3. Toma de desiciones
+4. Creacion del Design System
+5. Creacion de primeras pantallas
+6. Creacion de Responsive
+7. Creacion de las alertas
+8. Funcionamiento de Carrito
+9. Comprobacion de Requerimientos + Desiciones de diseño
+10. Revision de Codigo
